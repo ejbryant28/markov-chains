@@ -58,22 +58,45 @@ def make_chains(text_string):
 
 def make_text(chains):
     """Return text from chains."""
-
-    words = []
+    words = ['Would', 'you']
 
     #Look at tuple (would you)- randomly pick next word from list
     #Look at tuple (you- next) -randomly pick
     #(first word, link)
     #next work is random from list
 
-    first_tuple = chains[("Would", "you")]
-    next_word = choice(first_tuple)
+    #first_tuple = chains[("Would", "you")]
+    #next_word = choice(first_tuple)
+    word1 = words[0]
+    word2 = words[1]
 
-    print(first_tuple, next_word)
+    for word in chains:
+        key = (word1, word2)
+
+        # if key == ('Sam', 'I'):
+        if key == ('them,', 'Sam'):
+            break
+
+        else:
+            next_word = choice(chains[key])
+            words.append(next_word)
+            word1 = word2
+            word2 = next_word
+
+    words.extend(["I", "am?"])
+    #     # if key in chains:
+    #     #     next_word = choice(chains[key])
+    #     #     words.append(next_word)
+    #     #     word1 = word2
+    #     #     word2 = next_word
+
+    #     # else:
+    #     #     words.extend("I", "am?")
+
 
     # for key, value in chains:
 
-    # return " ".join(words)
+    return " ".join(words)
 
 
 input_path = "green-eggs.txt"

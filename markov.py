@@ -39,29 +39,24 @@ def make_chains(text_string):
 
     chains = {}
 
-    whole_text = text_string.split(" ")
-    print(whole_text)
+    whole_text = text_string.split()
+    # for loop to go through text and group into tuples
+    for i in range(len(whole_text)-2):
 
-    # i = 0
-    # while i < 100:
-    # # for word in text_string:
-    #     #key =chain is tuple of i (n, i n+1)
-    #     #value = following word in a list
-    #     #dictionaryname[key] = value
-    #     # i = 0
-    #     print(text_string[i])
-    #     chain = (text_string[i], text_string[i + 1])
-    #     print(chains)
-    #     print(chain)
+        following_word = whole_text[i + 2]
+        chain_tuple = (whole_text[i], whole_text[i + 1])
 
-    #     possible_following_words = []
+    # conditional statement to check for chain_tuple in keys of dictionary
+        # if new entry, it'll add a list containing a following word
+        if chain_tuple not in chains.keys():
+            chains[chain_tuple] = [following_word]
+        # if not new entry, append the following word to the value
+        else:
+            chains[chain_tuple].append(following_word)
 
-    #     chains[chain] = possible_following_words.append(text_string[i+2]) 
-    #     break
+    return chains
 
-    # return chains
-
-#print(make_chains(open_and_read_file('green-eggs.txt')))
+print(make_chains(open_and_read_file('green-eggs.txt')))
 
 def make_text(chains):
     """Return text from chains."""

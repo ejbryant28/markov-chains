@@ -53,17 +53,16 @@ def make_chains(text_string):
         # if not new entry, append the following word to the value
         else:
             chains[chain_tuple].append(following_word)
-
+    print(chains.items())
     return chains
 
-print(make_chains(open_and_read_file('green-eggs.txt')))
 
 def make_text(chains):
     """Return text from chains."""
 
     words = []
 
-    # your code goes here
+
 
     return " ".join(words)
 

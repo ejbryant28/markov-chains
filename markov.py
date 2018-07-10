@@ -2,7 +2,6 @@
 
 from random import choice
 
-
 def open_and_read_file(file_path):
     """Take file path as string; return text as string.
 
@@ -53,7 +52,7 @@ def make_chains(text_string):
         # if not new entry, append the following word to the value
         else:
             chains[chain_tuple].append(following_word)
-    print(chains.items())
+
     return chains
 
 
@@ -62,20 +61,30 @@ def make_text(chains):
 
     words = []
 
+    #Look at tuple (would you)- randomly pick next word from list
+    #Look at tuple (you- next) -randomly pick
+    #(first word, link)
+    #next work is random from list
+
+    first_tuple = chains[("Would", "you")]
+    next_word = choice(first_tuple)
+
+    print(first_tuple, next_word)
+
+    # for key, value in chains:
+
+    # return " ".join(words)
 
 
-    return " ".join(words)
+input_path = "green-eggs.txt"
 
+# Open the file and turn it into one long string
+input_text = open_and_read_file(input_path)
 
-# input_path = "green-eggs.txt"
+# Get a Markov chain
+chains = make_chains(input_text)
 
-# # Open the file and turn it into one long string
-# input_text = open_and_read_file(input_path)
+# Produce random text
+random_text = make_text(chains)
 
-# # Get a Markov chain
-# chains = make_chains(input_text)
-
-# # Produce random text
-# random_text = make_text(chains)
-
-# print (random_text)
+print (random_text)

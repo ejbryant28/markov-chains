@@ -81,9 +81,10 @@ def make_text(chains, list_words):
 
         else:
             next_word = choice(chains[key])
-            words.append(next_word)
-            word1 = word2
-            word2 = next_word
+            print('hi')
+            # words.append(next_word)
+            # word1 = word2
+            # word2 = next_word
 
     # words.append(last_tuple)
     # #     # if key in chains:

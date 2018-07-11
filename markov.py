@@ -10,15 +10,10 @@ def open_and_read_file(file_path):
     """
     read_file = open(file_path).read()
 
+    # file_path.close()
+
     return read_file
 
-# def split_text(input):
-#     """Takes string and splits into list."""
-
-#     input = input.split()
-#     input.append(None)
-
-#     return input
 
 def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
@@ -72,13 +67,17 @@ def make_text(chains):
 
     words = []
 
+    # random_key pulls a tuple from the .keys() in dictionary chains and converts to list. .keys() DOES NOT GENERATE A LIST. it generates an ITERABLE.
     random_key = choice(list(chains.keys()))
-    word_key = [random_key[0], random_key[1]]
+    # next_word randomly chooses from the values (which is list) associated with random_key
     next_word = choice(chains[random_key])
     
+    # while loop over dictionary chains to make sure random_key has a next_word available. If next_word is none, function ends.
     while next_word is not None:
+        # redefine random_key to be the next sequential tuple
         random_key = (random_key[1], next_word)
         words.append(next_word)
+        # redefine next_word to be from the values associated with new tuple
         next_word = choice(chains[random_key])
  
     return " ".join(words)
@@ -98,4 +97,4 @@ def execute_functions(file_name):
 
     print(random_text)
 
-execute_functions('gettysburg.txt')
+execute_functions('green-eggs.txt')

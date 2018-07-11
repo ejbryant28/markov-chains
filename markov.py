@@ -74,7 +74,7 @@ def make_text(chains, list_words):
     word2 = words[1]
 
     for word in chains:
-        key = (word1, word2)
+        key = tuple((word1, word2))
 
         if key == last_tuple:
             break

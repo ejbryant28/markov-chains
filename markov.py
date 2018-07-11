@@ -9,12 +9,16 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
     read_file = open(file_path).read()
+
     return read_file
 
-def split_text(input):
-    """Takes string and splits into list."""
+# def split_text(input):
+#     """Takes string and splits into list."""
 
-    return input.split()
+#     input = input.split()
+#     input.append(None)
+
+#     return input
 
 def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
@@ -43,6 +47,9 @@ def make_chains(text_string):
 
     chains = {}
 
+    text_string = text_string.split()
+    text_string.append(None)
+
     # for loop to go through text and group into tuples
     for i in range(len(text_string)-2):
 
@@ -60,47 +67,21 @@ def make_chains(text_string):
     return chains
 
 
-def make_text(chains, list_words):
+def make_text(chains):
     """Return text from chains."""
+
     words = []
 
-    first_words = list_words[0:2]
-    words.extend(first_words)
+    random_key = choice(list(chains.keys()))
+    word_key = [random_key[0], random_key[1]]
+    next_word = choice(chains[random_key])
     
-    last_tuple = list_words[-3:-1]
-    last_tuple = tuple(last_tuple)
-
-    word1 = words[0]
-    word2 = words[1]
-
-    for word in chains:
-        key = tuple((word1, word2))
-
-        if key == last_tuple:
-            break
-
-        else:
-            next_word = choice(chains[key])
-            print('hi')
-            # words.append(next_word)
-            # word1 = word2
-            # word2 = next_word
-
-    # words.append(last_tuple)
-    # #     # if key in chains:
-    # #     #     next_word = choice(chains[key])
-    # #     #     words.append(next_word)
-    # #     #     word1 = word2
-    # #     #     word2 = next_word
-
-    # #     # else:
-    # #     #     words.extend("I", "am?")
-
-
-    # # # for key, value in chains:
-
-    # return " ".join(words)
-
+    while next_word is not None:
+        random_key = (random_key[1], next_word)
+        words.append(next_word)
+        next_word = choice(chains[random_key])
+ 
+    return " ".join(words)
 
 
 def execute_functions(file_name):
@@ -108,16 +89,13 @@ def execute_functions(file_name):
 
     # Open the file and turn it into one long string
     input_text = open_and_read_file(input_path)
-
-    # Input is string, splits text into list of strings
-    whole_text = split_text(input_text)
-
+    
     # Get a Markov chain
     chains = make_chains(input_text)
-
+    
     # Produce random text
-    random_text = make_text(chains, whole_text)
+    random_text = make_text(chains)
 
-    # print (random_text)
+    print(random_text)
 
-execute_functions('green-eggs.txt')
+execute_functions('gettysburg.txt')

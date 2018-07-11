@@ -11,6 +11,11 @@ def open_and_read_file(file_path):
     read_file = open(file_path).read()
     return read_file
 
+def split_text(input):
+    """Takes string and splits into list."""
+
+    return input.split()
+
 def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
 
@@ -38,12 +43,11 @@ def make_chains(text_string):
 
     chains = {}
 
-    whole_text = text_string.split()
     # for loop to go through text and group into tuples
-    for i in range(len(whole_text)-2):
+    for i in range(len(text_string)-2):
 
-        following_word = whole_text[i + 2]
-        chain_tuple = (whole_text[i], whole_text[i + 1])
+        following_word = text_string[i + 2]
+        chain_tuple = (text_string[i], text_string[i + 1])
 
     # conditional statement to check for chain_tuple in keys of dictionary
         # if new entry, it'll add a list containing a following word
@@ -56,25 +60,23 @@ def make_chains(text_string):
     return chains
 
 
-def make_text(chains):
+def make_text(chains, list_words):
     """Return text from chains."""
-    words = ['Would', 'you']
+    words = []
 
-    #Look at tuple (would you)- randomly pick next word from list
-    #Look at tuple (you- next) -randomly pick
-    #(first word, link)
-    #next work is random from list
+    first_words = list_words[0:2]
+    words.extend(first_words)
+    
+    last_tuple = list_words[-3:-1]
+    last_tuple = tuple(last_tuple)
 
-    #first_tuple = chains[("Would", "you")]
-    #next_word = choice(first_tuple)
     word1 = words[0]
     word2 = words[1]
 
     for word in chains:
         key = (word1, word2)
 
-        # if key == ('Sam', 'I'):
-        if key == ('them,', 'Sam'):
+        if key == last_tuple:
             break
 
         else:
@@ -83,31 +85,38 @@ def make_text(chains):
             word1 = word2
             word2 = next_word
 
-    words.extend(["I", "am?"])
-    #     # if key in chains:
-    #     #     next_word = choice(chains[key])
-    #     #     words.append(next_word)
-    #     #     word1 = word2
-    #     #     word2 = next_word
+    # words.append(last_tuple)
+    # #     # if key in chains:
+    # #     #     next_word = choice(chains[key])
+    # #     #     words.append(next_word)
+    # #     #     word1 = word2
+    # #     #     word2 = next_word
 
-    #     # else:
-    #     #     words.extend("I", "am?")
-
-
-    # for key, value in chains:
-
-    return " ".join(words)
+    # #     # else:
+    # #     #     words.extend("I", "am?")
 
 
-input_path = "green-eggs.txt"
+    # # # for key, value in chains:
 
-# Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+    # return " ".join(words)
 
-# Get a Markov chain
-chains = make_chains(input_text)
 
-# Produce random text
-random_text = make_text(chains)
 
-print (random_text)
+def execute_functions(file_name):
+    input_path = file_name
+
+    # Open the file and turn it into one long string
+    input_text = open_and_read_file(input_path)
+
+    # Input is string, splits text into list of strings
+    whole_text = split_text(input_text)
+
+    # Get a Markov chain
+    chains = make_chains(input_text)
+
+    # Produce random text
+    random_text = make_text(chains, whole_text)
+
+    # print (random_text)
+
+execute_functions('green-eggs.txt')
